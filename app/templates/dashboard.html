@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Patient Registration Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; background: #f6f7f9; color: #1f2937; }
+    .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #e5e7eb; text-align: left; font-size: 14px; }
+    th { background: #f9fafb; }
+    .muted { color: #6b7280; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Patient Registration Dashboard</h1>
+    <p class="muted">Active patients: {{ patients|length }}</p>
+    <table>
+      <thead><tr><th>Name</th><th>DOB</th><th>Phone</th><th>City</th><th>State</th><th>ZIP</th><th>Created</th></tr></thead>
+      <tbody>
+      {% for p in patients %}
+        <tr>
+          <td>{{ p.first_name }} {{ p.last_name }}</td>
+          <td>{{ p.date_of_birth.strftime('%m/%d/%Y') }}</td>
+          <td>{{ p.phone_number }}</td>
+          <td>{{ p.city }}</td>
+          <td>{{ p.state }}</td>
+          <td>{{ p.zip_code }}</td>
+          <td>{{ p.created_at.strftime('%Y-%m-%d %H:%M UTC') }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="7">No patients registered yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
