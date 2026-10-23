@@ -35,7 +35,7 @@ Validation failures also use the same envelope.
 
 Vapi Custom/Function Tools point to:
 
-`POST https://YOUR-DOMAIN/vapi/tool`
+`POST https://carecloudai-engineerassessment-production.up.railway.app/vapi/tool`
 
 Supported tool names:
 
@@ -70,10 +70,10 @@ Set `DATABASE_URL` to a persistent PostgreSQL connection string, for example a R
 1. Create a Vapi assistant.
 2. Put the contents of `VAPI_SYSTEM_PROMPT.md` into the assistant system prompt.
 3. Create three Custom/Function Tools matching `vapi_tools.json`.
-4. Replace `https://YOUR-DOMAIN/vapi/tool` with the deployed backend URL.
+4. Replace `https://carecloudai-engineerassessment-production.up.railway.app/vapi/tool` with the deployed backend URL.
 5. Attach the tools to the assistant.
 6. Provision a U.S. Vapi phone number and assign the assistant to inbound calls.
-7. Make a test registration call, confirm the data, then verify it via `/patients` and `/dashboard`.
+7. Use Vapi's assistant Talk/test interface for a simulated call with fictional data (for example, the fictional U.S. number `202-555-0147`). Confirm the read-back, then verify the record via `/patients` and `/dashboard`. This simulated test does not verify inbound PSTN calling; that requires a configured Vapi phone number or SIP connection.
 
 ## Security
 
