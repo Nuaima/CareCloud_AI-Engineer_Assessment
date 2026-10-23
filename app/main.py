@@ -83,7 +83,7 @@ def create_patient(payload: PatientCreate, db: Session = Depends(get_db)):
     db.add(p)
     db.commit()
     db.refresh(p)
-    logger.info("PATIENT_CREATED payload=%s", json.dumps(patient_dict(p), default=str))
+    logger.info("PATIENT_CREATED patient_id=%s", p.patient_id)
     return envelope(patient_dict(p))
 
 @app.put("/patients/{patient_id}")
@@ -132,7 +132,7 @@ async def vapi_tool(request: Request, db: Session = Depends(get_db)):
                 db.add(p)
                 db.commit()
                 db.refresh(p)
-                logger.info("VOICE_PATIENT_CREATED call_id=%s payload=%s", message.get("call", {}).get("id"), json.dumps(patient_dict(p), default=str))
+                logger.info("VOICE_PATIENT_CREATED call_id=%s patient_id=%s", message.get("call", {}).get("id"), p.patient_id)
                 result = {"success": True, "patient_id": p.patient_id, "patient": patient_dict(p)}
             elif name == "update_patient":
                 patient_id = args.pop("patient_id", None)
@@ -153,7 +153,7 @@ async def vapi_tool(request: Request, db: Session = Depends(get_db)):
         except Exception as exc:
             db.rollback()
             logger.exception("Vapi tool failure: %s", name)
-            result = {"success": False, "error": str(exc)}
+            result = {"success": False, "error": "Unable to process this request. Please verify the supplied fields and try again."}
         results.append({"toolCallId": tool_id, "result": result})
     return {"results": results}
 
