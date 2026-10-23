@@ -114,13 +114,23 @@ def delete_patient(patient_id: str, db: Session = Depends(get_db)):
 async def vapi_tool(request: Request, db: Session = Depends(get_db)):
     body = await request.json()
     message = body.get("message", {})
-    tool_calls = message.get("toolCallList", [])
+    tool_calls = message.get("toolCallList") or message.get("toolCalls") or []
     results = []
 
     for call in tool_calls:
-        tool_id = call.get("id")
-        name = call.get("name")
-        args = call.get("arguments") or {}
+        function = call.get("function") or {}
+        tool_id = call.get("id") or call.get("toolCallId")
+        name = call.get("name") or function.get("name")
+        args = call.get("arguments")
+        if args is None:
+            args = function.get("arguments")
+        if isinstance(args, str):
+            try:
+                args = json.loads(args)
+            except json.JSONDecodeError:
+                args = {}
+        if not isinstance(args, dict):
+            args = {}
         try:
             if name == "lookup_patient_by_phone":
                 phone = normalize_phone(args.get("phone_number"))
