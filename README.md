@@ -74,6 +74,7 @@ Set `DATABASE_URL` to a persistent PostgreSQL connection string, for example a R
 5. Attach the tools to the assistant.
 6. Provision a U.S. Vapi phone number and assign the assistant to inbound calls.
 7. Use Vapi's assistant Talk/test interface for a simulated call with fictional data (for example, the fictional U.S. number `202-555-0147`). Confirm the read-back, then verify the record via `/patients` and `/dashboard`. This simulated test does not verify inbound PSTN calling; that requires a configured Vapi phone number or SIP connection.
+8. The prompt is designed to handle pauses, self-corrections, and incomplete speech: it asks one field at a time, clarifies incomplete dates, and returns gently to the current unanswered field. After changing `VAPI_SYSTEM_PROMPT.md`, copy the updated contents into the Vapi assistant's system prompt; changing the GitHub file alone does not update the saved Vapi assistant configuration.
 
 ## Security
 
@@ -83,7 +84,7 @@ Set `DATABASE_URL` to a persistent PostgreSQL connection string, for example a R
 
 ## Observability
 
-Successful voice registrations log the call ID and final persisted payload to stdout. API creates and updates are also logged.
+Successful voice registrations log the call ID and patient ID to stdout; patient field values are not intentionally written to application logs. API creates and updates are also logged.
 
 ## Known trade-offs / limitations
 
