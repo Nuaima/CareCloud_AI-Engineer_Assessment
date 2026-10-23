@@ -12,7 +12,7 @@
         "required": ["phone_number"]
       }
     },
-    "server": {"url": "https://YOUR-DOMAIN/vapi/tool"}
+    "server": {"url": "https://carecloudai-engineerassessment-production.up.railway.app/vapi/tool"}
   },
   {
     "type": "function",
@@ -42,7 +42,7 @@
         "required": ["first_name", "last_name", "date_of_birth", "sex", "phone_number", "address_line_1", "city", "state", "zip_code"]
       }
     },
-    "server": {"url": "https://YOUR-DOMAIN/vapi/tool"}
+    "server": {"url": "https://carecloudai-engineerassessment-production.up.railway.app/vapi/tool"}
   },
   {
     "type": "function",
@@ -73,6 +73,6 @@
         "required": ["patient_id"]
       }
     },
-    "server": {"url": "https://YOUR-DOMAIN/vapi/tool"}
+    "server": {"url": "https://carecloudai-engineerassessment-production.up.railway.app/vapi/tool"}
   }
 ]
