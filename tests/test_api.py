@@ -54,3 +54,27 @@ def test_update_filter_and_soft_delete():
     missing = client.get(f"/patients/{patient_id}")
     assert missing.status_code == 404
     assert missing.json()["error"] is not None
+
+
+def test_vapi_tool_accepts_function_wrapped_arguments():
+    response = client.post(
+        "/vapi/tool",
+        json={
+            "message": {
+                "toolCallList": [
+                    {
+                        "id": "test-call-1",
+                        "type": "function",
+                        "function": {
+                            "name": "lookup_patient_by_phone",
+                            "arguments": '{"phone_number":"202-555-0147"}',
+                        },
+                    }
+                ]
+            }
+        },
+    )
+    assert response.status_code == 200
+    result = response.json()["results"][0]
+    assert result["toolCallId"] == "test-call-1"
+    assert result["result"]["found"] is False
